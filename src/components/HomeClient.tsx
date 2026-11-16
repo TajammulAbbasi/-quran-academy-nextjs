@@ -97,6 +97,27 @@ export default function HomeClient() {
         </div>
       </Section>
 
+      <Section title="Quran Guides — Learn More" sub="Practical guides for parents — how online Quran learning works, Hifz tips, and Tajweed in plain words.">
+        <div className="grid gap-4 md:grid-cols-3">
+          <article className="lift bg-white border border-emerald-200 rounded-2xl p-5">
+            <h3 className="font-bold text-emerald-900">How to Learn Quran Online for Kids</h3>
+            <p className="text-sm mt-2">What parents should check before enrolling, a simple weekly routine, and how 1-to-1 live classes work.</p>
+            <Link href="/blog/how-to-learn-quran-online-for-kids" className="text-emerald-700 font-semibold text-sm mt-3 inline-block">Read the guide →</Link>
+          </article>
+          <article className="lift bg-white border border-emerald-200 rounded-2xl p-5">
+            <h3 className="font-bold text-emerald-900">Hifz Memorisation Tips for Kids</h3>
+            <p className="text-sm mt-2">How the Sabaq, Sabqi and Manzil system works, a daily routine, and the revision habits that keep memorisation strong.</p>
+            <Link href="/blog/hifz-memorisation-tips-for-kids" className="text-emerald-700 font-semibold text-sm mt-3 inline-block">Read the guide →</Link>
+          </article>
+          <article className="lift bg-white border border-emerald-200 rounded-2xl p-5">
+            <h3 className="font-bold text-emerald-900">What Is Tajweed and Why It Matters</h3>
+            <p className="text-sm mt-2">Tajweed in plain words: what the rules are, why correct pronunciation matters, and how to learn it step by step.</p>
+            <Link href="/blog/what-is-tajweed-and-why-it-matters" className="text-emerald-700 font-semibold text-sm mt-3 inline-block">Read the guide →</Link>
+          </article>
+        </div>
+        <Link href="/blog" className="text-emerald-700 font-semibold text-sm mt-4 inline-block">See all guides →</Link>
+      </Section>
+
       <Section title={t("faqTitle")}>
         <div className="space-y-3 text-sm">
           <details className="bg-white border border-emerald-200 rounded-xl p-4"><summary className="font-semibold cursor-pointer">How much are the fees?</summary><p className="mt-2">Basic plan (3 classes a week) is $30 / £25 per month. Regular plan (5 classes a week) is $50 / £40 per month. PKR fees: WhatsApp par poochein.</p></details>

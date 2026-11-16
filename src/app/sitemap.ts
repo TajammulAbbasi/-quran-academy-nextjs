@@ -3,7 +3,8 @@ import { SITE } from "@/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.baseUrl;
-  const pages = ["", "/courses", "/teachers", "/fees", "/timetable", "/admission", "/faq", "/contact", "/ai-tools", "/free-trial", "/student", "/teacher",
+  const pages = ["", "/courses", "/teachers", "/fees", "/timetable", "/admission", "/faq", "/contact", "/ai-tools", "/free-trial", "/student", "/teacher", "/blog",
+    "/blog/how-to-learn-quran-online-for-kids", "/blog/hifz-memorisation-tips-for-kids", "/blog/what-is-tajweed-and-why-it-matters",
     ...SITE.countries.map((c) => `/countries/${c.code}`),
     ...SITE.courses.map((c) => `/courses/${c.slug}`)];
   return pages.map((p) => ({ url: base + p, lastModified: new Date(), changeFrequency: "weekly", priority: p === "" ? 1 : 0.7 }));

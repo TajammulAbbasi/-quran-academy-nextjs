@@ -6,6 +6,7 @@ import { LangProvider } from "@/lib/i18n";
 import { FAVICON_DATA_URI } from "@/lib/logo";
 
 export const metadata: Metadata = {
+  verification: { google: "nVvtI1YT-roAhKdug3eQinKZ5fH48CSWg8uonfkRLTI" },
   icons: { icon: [{ url: FAVICON_DATA_URI, type: "image/png", sizes: "64x64" }] },
   title: `${SITE.name} — Learn Quran Online USA, UK, Canada, Australia`,
   description: "Learn Quran online with 1-to-1 live classes for kids and adults. Noorani Qaida, Nazra, Hifz, Tajweed and Tafseer. Qualified male and female teachers, flexible timing, free trial class. Fees $30/£25 and $50/£40 per month, paid to the academy's bank account.",

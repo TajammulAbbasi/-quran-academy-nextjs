@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { LOGO_DATA_URI } from "@/lib/logo";
 import { SITE } from "@/config/site";
 import { LangToggle, useLang } from "@/lib/i18n";
 import Reveal from "@/components/Reveal";
@@ -18,7 +19,7 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-emerald-100">
       <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3 justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-full bg-emerald-700 text-white grid place-items-center text-xl font-bold">N</span>
+          <img src={LOGO_DATA_URI} alt="Noor Quran Academy logo" className="w-10 h-10 rounded-full object-cover" />
           <span><span className="block font-bold text-emerald-900 leading-tight">{SITE.name}</span>
           <span className="block text-xs text-emerald-700">Online Quran Academy — UK · USA · Canada · Australia</span></span>
         </Link>

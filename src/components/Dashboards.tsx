@@ -1,12 +1,26 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SITE } from "@/config/site";
 import { load, save, uid, SEED_STUDENTS, SEED_TEACHERS, SEED_FEES, PARA_NAMES } from "@/lib/store";
 import type { Student, Teacher, FeeRecord, TeacherApplication, TeacherPayment } from "@/lib/store";
 
+// Stable empty seeds — these MUST be module constants, not inline literals:
+// useData's load effect must run once per key. An inline [] or {} seed is a
+// new reference on every render, so the effect would re-fire forever.
+const EMPTY_APPS: TeacherApplication[] = [];
+const EMPTY_PAY: TeacherPayment[] = [];
+const DEFAULT_SETTINGS = { bankName: "", accountTitle: "", iban: "", swift: "" };
+
 function useData<T>(key: string, seed: T) {
   const [data, setData] = useState<T>(seed);
-  useEffect(() => { setData(load<T>(key, seed)); }, [key, seed]);
+  // Capture the seed once: the load effect depends on [key] only. Depending
+  // on `seed` too re-ran the effect on every render whenever the caller
+  // passed an inline literal (new reference each render), and load() returns
+  // a fresh JSON.parse object each time, so setData -> render -> effect
+  // looped forever, pegging the main thread and swallowing all clicks
+  // (this froze the header nav on /owner and /teacher).
+  const seedRef = useRef(seed);
+  useEffect(() => { setData(load<T>(key, seedRef.current)); }, [key]);
   const update = (v: T) => { setData(v); save(key, v); };
   return [data, update] as const;
 }
@@ -85,8 +99,8 @@ export function TeacherDashboard() {
   const [teachers] = useData<Teacher[]>("nqa_teachers", SEED_TEACHERS);
   const [students, setStudents] = useData<Student[]>("nqa_students", SEED_STUDENTS);
   const [fees, setFees] = useData<FeeRecord[]>("nqa_fees", SEED_FEES);
-  const [apps, setApps] = useData<TeacherApplication[]>("nqa_apps", []);
-  const [pay] = useData<TeacherPayment[]>("nqa_pay", []);
+  const [apps, setApps] = useData<TeacherApplication[]>("nqa_apps", EMPTY_APPS);
+  const [pay] = useData<TeacherPayment[]>("nqa_pay", EMPTY_PAY);
   const [tab, setTab] = useState<"apply" | "login">("login");
   const [name, setName] = useState("");
   const [me, setMe] = useState<Teacher | null>(null);
@@ -176,9 +190,9 @@ export function OwnerDashboard() {
   const [students, setStudents] = useData<Student[]>("nqa_students", SEED_STUDENTS);
   const [teachers, setTeachers] = useData<Teacher[]>("nqa_teachers", SEED_TEACHERS);
   const [fees, setFees] = useData<FeeRecord[]>("nqa_fees", SEED_FEES);
-  const [apps, setApps] = useData<TeacherApplication[]>("nqa_apps", []);
-  const [pay, setPay] = useData<TeacherPayment[]>("nqa_pay", []);
-  const [settings, setSettings] = useData("nqa_settings", { bankName: "", accountTitle: "", iban: "", swift: "" });
+  const [apps, setApps] = useData<TeacherApplication[]>("nqa_apps", EMPTY_APPS);
+  const [pay, setPay] = useData<TeacherPayment[]>("nqa_pay", EMPTY_PAY);
+  const [settings, setSettings] = useData("nqa_settings", DEFAULT_SETTINGS);
   const [unlocked, setUnlocked] = useState(false);
   const [pin, setPin] = useState("");
   const [payAmt, setPayAmt] = useState<Record<string, string>>({});

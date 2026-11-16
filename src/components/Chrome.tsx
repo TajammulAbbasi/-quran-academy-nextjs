@@ -11,7 +11,7 @@ export function Header() {
   const links: [string, string][] = [
     ["/", t("navHome")], ["/courses", t("navCourses")], ["/teachers", t("navTeachers")],
     ["/fees", t("navFees")], ["/timetable", t("navTimetable")],
-    ["/student", t("navStudent")], ["/teacher", t("navTeacher")], ["/owner", t("navOwner")],
+    ["/student", t("navStudent")], ["/teacher", t("navTeacher")],
     ["/faq", t("navFaq")],
     ["/contact", t("navContact")], ["/ai-tools", t("navAi")],
   ];

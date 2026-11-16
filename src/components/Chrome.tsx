@@ -9,7 +9,9 @@ export function Header() {
   const { t } = useLang();
   const links: [string, string][] = [
     ["/", t("navHome")], ["/courses", t("navCourses")], ["/teachers", t("navTeachers")],
-    ["/fees", t("navFees")], ["/timetable", t("navTimetable")], ["/faq", t("navFaq")],
+    ["/fees", t("navFees")], ["/timetable", t("navTimetable")],
+    ["/student", t("navStudent")], ["/teacher", t("navTeacher")], ["/owner", t("navOwner")],
+    ["/faq", t("navFaq")],
     ["/contact", t("navContact")], ["/ai-tools", t("navAi")],
   ];
   return (
@@ -29,8 +31,7 @@ export function Header() {
         </div>
       </div>
       <div className="bg-emerald-800 text-white text-xs">
-        <div className="max-w-6xl mx-auto px-4 py-1.5 flex flex-wrap gap-x-4 gap-y-1 justify-between">
-          <span><Link href="/student" className="underline">{t("navStudent")}</Link> · <Link href="/teacher" className="underline">{t("navTeacher")}</Link> · <Link href="/owner" className="underline">{t("navOwner")} Dashboard</Link></span>
+        <div className="max-w-6xl mx-auto px-4 py-1.5 text-center">
           <span>Free Trial Class · No lock-in · 7-day money-back</span>
         </div>
       </div>

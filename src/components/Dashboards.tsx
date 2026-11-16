@@ -196,6 +196,24 @@ export function OwnerDashboard() {
   const [unlocked, setUnlocked] = useState(false);
   const [pin, setPin] = useState("");
   const [payAmt, setPayAmt] = useState<Record<string, string>>({});
+  const [newStudent, setNewStudent] = useState({ name: "", phone: "", age: "", country: "UK", course: "Noorani Qaida", plan: "Basic — 3 classes a week", classTime: "", teacherId: "" });
+  const [studentAdded, setStudentAdded] = useState("");
+  const [newTeacher, setNewTeacher] = useState({ name: "", whatsapp: "", gender: "Male", qualification: "", experience: "", courses: "", languages: "English, Urdu", payType: "commission", payValue: "40" });
+  const [teacherAdded, setTeacherAdded] = useState("");
+
+  const COUNTRY_TZ: Record<string, string> = { UK: "Europe/London", USA: "America/New_York", Canada: "America/Toronto", Australia: "Australia/Sydney", Pakistan: "Asia/Karachi", Other: "" };
+  function addStudent() {
+    if (!newStudent.name.trim() || !newStudent.phone.trim()) { setStudentAdded("Please fill the student name and parent phone number."); return; }
+    setStudents([...students, { id: uid("s"), name: newStudent.name.trim(), phone: newStudent.phone.trim(), age: Number(newStudent.age) || 0, country: newStudent.country, course: newStudent.course, plan: newStudent.plan, teacherId: newStudent.teacherId, classTime: newStudent.classTime.trim(), timezone: COUNTRY_TZ[newStudent.country] ?? "", status: "trial" as const, memorisedParas: [], feesPaid: false, homework: "" }]);
+    setNewStudent({ name: "", phone: "", age: "", country: "UK", course: "Noorani Qaida", plan: "Basic — 3 classes a week", classTime: "", teacherId: "" });
+    setStudentAdded(`Student added: ${newStudent.name.trim()} — they can now log in with phone ${newStudent.phone.trim()}.`);
+  }
+  function addTeacher() {
+    if (!newTeacher.name.trim()) { setTeacherAdded("Please fill the teacher name."); return; }
+    setTeachers([...teachers, { id: uid("t"), name: newTeacher.name.trim(), whatsapp: newTeacher.whatsapp.trim(), gender: newTeacher.gender as "Male" | "Female", qualification: newTeacher.qualification.trim(), experience: newTeacher.experience.trim(), courses: newTeacher.courses.split(",").map((x) => x.trim()).filter(Boolean), languages: newTeacher.languages.trim() || "English, Urdu", approved: true, payType: newTeacher.payType as "salary" | "commission", payValue: Number(newTeacher.payValue) || 0 }]);
+    setNewTeacher({ name: "", whatsapp: "", gender: "Male", qualification: "", experience: "", courses: "", languages: "English, Urdu", payType: "commission", payValue: "40" });
+    setTeacherAdded(`Teacher added: ${newTeacher.name.trim()} — approved, now visible on the Teachers page.`);
+  }
 
   if (!unlocked) return (
     <div className={`${card} max-w-md`}>
@@ -241,6 +259,32 @@ export function OwnerDashboard() {
       </div>
 
       <div className={card}>
+        <h3 className="font-bold text-emerald-900">Add Student</h3>
+        <p className="text-xs mt-1">Add a student yourself — e.g. one who messaged on WhatsApp. The student logs in with the parent phone number below.</p>
+        <div className="grid gap-2 md:grid-cols-2 mt-3">
+          <input placeholder="Student name *" className={input} value={newStudent.name} onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })} />
+          <input placeholder="Parent phone / WhatsApp *" className={input} value={newStudent.phone} onChange={(e) => setNewStudent({ ...newStudent, phone: e.target.value })} />
+          <input placeholder="Age" type="number" className={input} value={newStudent.age} onChange={(e) => setNewStudent({ ...newStudent, age: e.target.value })} />
+          <select className={input} value={newStudent.country} onChange={(e) => setNewStudent({ ...newStudent, country: e.target.value })}>
+            {["UK", "USA", "Canada", "Australia", "Pakistan", "Other"].map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select className={input} value={newStudent.course} onChange={(e) => setNewStudent({ ...newStudent, course: e.target.value })}>
+            {SITE.courses.map((c) => <option key={c.slug} value={c.name}>{c.name}</option>)}
+          </select>
+          <select className={input} value={newStudent.plan} onChange={(e) => setNewStudent({ ...newStudent, plan: e.target.value })}>
+            {SITE.plans.map((p) => <option key={p.id} value={p.name}>{p.name}</option>)}
+          </select>
+          <input placeholder="Class time (e.g. Mon / Wed / Fri — 4:30 PM UK time)" className={input} value={newStudent.classTime} onChange={(e) => setNewStudent({ ...newStudent, classTime: e.target.value })} />
+          <select className={input} value={newStudent.teacherId} onChange={(e) => setNewStudent({ ...newStudent, teacherId: e.target.value })}>
+            <option value="">— No teacher yet —</option>
+            {teachers.filter((t) => t.approved).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+          </select>
+        </div>
+        <button onClick={addStudent} className={`${btn} mt-3`}>Add Student</button>
+        {studentAdded && <p className="text-sm text-emerald-800 mt-2">{studentAdded}</p>}
+      </div>
+
+      <div className={card}>
         <h3 className="font-bold text-emerald-900">All Students — assign a teacher &amp; set class time</h3>
         {students.map((s) => (
           <div key={s.id} className="border-t border-emerald-100 py-3 text-sm">
@@ -259,6 +303,28 @@ export function OwnerDashboard() {
       </div>
 
       <div className={card}>
+        <h3 className="font-bold text-emerald-900">Add Teacher</h3>
+        <p className="text-xs mt-1">Add a teacher yourself — approved immediately and shown on the Teachers page. Phone and pay are never shown publicly.</p>
+        <div className="grid gap-2 md:grid-cols-2 mt-3">
+          <input placeholder="Full name *" className={input} value={newTeacher.name} onChange={(e) => setNewTeacher({ ...newTeacher, name: e.target.value })} />
+          <input placeholder="WhatsApp number" className={input} value={newTeacher.whatsapp} onChange={(e) => setNewTeacher({ ...newTeacher, whatsapp: e.target.value })} />
+          <select className={input} value={newTeacher.gender} onChange={(e) => setNewTeacher({ ...newTeacher, gender: e.target.value })}>
+            <option>Male</option><option>Female</option>
+          </select>
+          <input placeholder="Qualification (e.g. Hifz, Ijazah)" className={input} value={newTeacher.qualification} onChange={(e) => setNewTeacher({ ...newTeacher, qualification: e.target.value })} />
+          <input placeholder="Experience (e.g. 5 years teaching kids)" className={input} value={newTeacher.experience} onChange={(e) => setNewTeacher({ ...newTeacher, experience: e.target.value })} />
+          <input placeholder="Courses, comma-separated (e.g. Noorani Qaida, Nazra Quran)" className={input} value={newTeacher.courses} onChange={(e) => setNewTeacher({ ...newTeacher, courses: e.target.value })} />
+          <input placeholder="Languages (English, Urdu)" className={input} value={newTeacher.languages} onChange={(e) => setNewTeacher({ ...newTeacher, languages: e.target.value })} />
+          <select className={input} value={newTeacher.payType} onChange={(e) => setNewTeacher({ ...newTeacher, payType: e.target.value })}>
+            <option value="commission">Commission %</option><option value="salary">Monthly salary $</option>
+          </select>
+          <input placeholder="Pay value (e.g. 40 = 40% commission)" type="number" className={input} value={newTeacher.payValue} onChange={(e) => setNewTeacher({ ...newTeacher, payValue: e.target.value })} />
+        </div>
+        <button onClick={addTeacher} className={`${btn} mt-3`}>Add Teacher</button>
+        {teacherAdded && <p className="text-sm text-emerald-800 mt-2">{teacherAdded}</p>}
+      </div>
+
+      <div className={card}>
         <h3 className="font-bold text-emerald-900">Teachers &amp; Pay</h3>
         {teachers.filter((t) => t.approved).map((t) => {
           const mine = students.filter((s) => s.teacherId === t.id);
@@ -267,7 +333,7 @@ export function OwnerDashboard() {
           const given = pay.filter((p) => p.teacherId === t.id).reduce((a, p) => a + p.amount, 0);
           return (
             <div key={t.id} className="border-t border-emerald-100 py-3 text-sm">
-              <p><strong>{t.name}</strong> — {t.qualification} · {t.experience} · Students: {mine.length} · Collected: ${collected}</p>
+              <p><strong>{t.name}</strong> — {t.qualification} · {t.experience} · Students: {mine.length} · Collected: ${collected}{t.whatsapp ? ` · WhatsApp: ${t.whatsapp}` : ""}</p>
               <div className="flex flex-wrap gap-2 mt-2 items-center">
                 <select value={t.payType} onChange={(e) => setTeachers(teachers.map((x) => (x.id === t.id ? { ...x, payType: e.target.value as "salary" | "commission" } : x)))} className="border border-emerald-300 rounded-lg px-2 py-1 text-sm">
                   <option value="commission">Commission %</option><option value="salary">Monthly salary $</option>

@@ -11,7 +11,7 @@ export type Teacher = {
   id: string; name: string; gender: "Male" | "Female"; qualification: string;
   experience: string; courses: string[]; languages: string;
   approved: boolean; payType: "salary" | "commission"; payValue: number;
-  demo?: boolean;
+  demo?: boolean; whatsapp?: string; // owner-only: never shown on the public Teachers page
 };
 export type TeacherApplication = {
   id: string; name: string; whatsapp: string; gender: string; qualification: string;

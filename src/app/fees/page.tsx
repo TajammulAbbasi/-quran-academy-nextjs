@@ -22,6 +22,8 @@ export default function FeesPage() {
         ))}
       </div>
 
+      <p className="text-sm mt-6 max-w-3xl">Not sure which plan fits your child? <Link href="/courses" className="text-emerald-700 underline">See all courses</Link> — every course is 1-to-1 with a qualified teacher. <Link href="/teachers" className="text-emerald-700 underline">Meet our teachers</Link> before you decide.</p>
+
       <h2 className="text-xl font-bold text-emerald-900 mt-10">How to pay from abroad — bank account only</h2>
       <p className="text-sm mt-2 max-w-3xl">The academy only has a bank account. It has <strong>no PayPal, no Stripe and no Payoneer account</strong>, and it does not need one. You send the fee from your own app to the academy&apos;s bank account:</p>
       <div className="grid gap-4 md:grid-cols-2 mt-4">

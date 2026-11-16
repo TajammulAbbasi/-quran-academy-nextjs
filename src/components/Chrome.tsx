@@ -85,6 +85,19 @@ export function Section({ title, sub, children }: { title: string; sub?: string;
   );
 }
 
+export function Breadcrumb({ items }: { items: [string, string][] }) {
+  return (
+    <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-4 pt-6 text-sm text-emerald-700">
+      {items.map(([href, label], i) => (
+        <span key={href}>
+          {i > 0 && <span className="mx-1 text-emerald-400">/</span>}
+          {i === items.length - 1 ? <span className="font-semibold text-emerald-900">{label}</span> : <Link href={href} className="underline hover:text-emerald-600">{label}</Link>}
+        </span>
+      ))}
+    </nav>
+  );
+}
+
 export function WhatsAppButton({ label }: { label?: string }) {
   return <a href={SITE.whatsappLink} target="_blank" rel="noreferrer" className="btn-anim inline-block bg-emerald-700 text-white font-semibold px-6 py-3 rounded-full">{label ?? `WhatsApp ${SITE.whatsappDisplay}`}</a>;
 }

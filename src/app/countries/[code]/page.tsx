@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SITE } from "@/config/site";
-import { Section, WhatsAppButton, TimezonePicker } from "@/components/Chrome";
+import { Breadcrumb, Section, WhatsAppButton, TimezonePicker } from "@/components/Chrome";
 
 export function generateStaticParams() {
   return SITE.countries.map((c) => ({ code: c.code }));
@@ -18,13 +18,17 @@ export async function generateMetadata({ params }: { params: { code: string } })
 export default function CountryPage({ params }: { params: { code: string } }) {
   const c = SITE.countries.find((x) => x.code === params.code);
   if (!c) notFound();
+  const otherCountries = SITE.countries.filter((x) => x.code !== c.code);
   return (
+    <>
+    <Breadcrumb items={[["/", "Home"], [`/countries/${c.code}`, `Quran Classes in ${c.name}`]]} />
     <Section title={`Learn Quran Online in ${c.name}`} sub={`${c.keyword}. 1-to-1 live classes for kids and adults, taught online from Pakistan by qualified male and female teachers.`}>
       <div className="grid gap-4 md:grid-cols-2">
         <div className="bg-white border border-emerald-200 rounded-2xl p-6 text-sm space-y-2">
-          <p><strong>Classes:</strong> Noorani Qaida, Nazra, Hifz, Tajweed, Tafseer.</p>
-          <p><strong>Timing:</strong> Flexible — you choose your time, usually after school ({c.tzLabel}).</p>
-          <p><strong>Fees:</strong> 3 classes a week $30 / £25 per month · 5 classes a week $50 / £40 per month.</p>
+          <p><strong>Classes:</strong> <Link href="/courses" className="text-emerald-700 underline">Noorani Qaida, Nazra, Hifz, Tajweed and Tafseer — see all courses</Link>.</p>
+          <p><strong>Teachers:</strong> <Link href="/teachers" className="text-emerald-700 underline">qualified male and female teachers — meet our teachers</Link>.</p>
+          <p><strong>Timing:</strong> Flexible — you choose your time, usually after school ({c.tzLabel}). <Link href="/timetable" className="text-emerald-700 underline">See flexible class timings</Link>.</p>
+          <p><strong>Fees:</strong> 3 classes a week $30 / £25 per month · 5 classes a week $50 / £40 per month. <Link href="/fees" className="text-emerald-700 underline">See full fees &amp; payment details</Link>.</p>
           <p><strong>Payment:</strong> to the academy&apos;s bank account by Wise, Remitly, Western Union or bank transfer. No PayPal, no Stripe, no Payoneer.</p>
           <p><strong>Free trial:</strong> one free 1-to-1 lesson before you pay.</p>
           <div className="flex flex-wrap gap-3 pt-2">
@@ -34,7 +38,16 @@ export default function CountryPage({ params }: { params: { code: string } }) {
         </div>
         <TimezonePicker />
       </div>
+      <div className="mt-8">
+        <h2 className="font-bold text-emerald-900">Quran classes in other countries</h2>
+        <ul className="mt-3 flex flex-wrap gap-3 text-sm">
+          {otherCountries.map((o) => (
+            <li key={o.code}><Link href={`/countries/${o.code}`} className="text-emerald-700 underline">Quran classes in {o.name}</Link></li>
+          ))}
+        </ul>
+      </div>
       <p className="text-sm mt-6"><Link href="/" className="text-emerald-700 underline">← Back to home</Link></p>
     </Section>
+    </>
   );
 }

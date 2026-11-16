@@ -37,7 +37,7 @@ export default function HomeClient() {
               <h3 className="font-bold text-lg text-emerald-900">{c.name}</h3>
               <p className="text-sm text-emerald-700 mt-1">Age {c.age} · {c.duration}</p>
               <p className="text-sm mt-2">{c.desc}</p>
-              <Link href="/courses" className="text-emerald-700 font-semibold text-sm mt-3 inline-block">Learn more →</Link>
+              <Link href={`/courses/${c.slug}`} className="text-emerald-700 font-semibold text-sm mt-3 inline-block">Learn more about {c.name} →</Link>
             </article>
           ))}
         </div>

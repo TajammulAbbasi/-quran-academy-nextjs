@@ -19,6 +19,7 @@ export default function TeachersPage() {
         <Link href="/teacher" className="inline-block mt-4 bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full">Teach With Us — Apply</Link>
       </div>
       <p className="text-xs text-emerald-700 mt-4">Demo note: the teachers shown are starter demo profiles. Replace them with real approved teachers from the Owner Dashboard.</p>
+      <p className="text-sm mt-4">For parents: <Link href="/courses" className="text-emerald-700 underline">see the courses our teachers teach</Link> and <Link href="/fees" className="text-emerald-700 underline">see fees &amp; payment details</Link>.</p>
     </Section>
   );
 }

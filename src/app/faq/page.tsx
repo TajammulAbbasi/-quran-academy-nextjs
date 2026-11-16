@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SITE } from "@/config/site";
 import { Section } from "@/components/Chrome";
 
@@ -18,6 +19,18 @@ const FAQS = [
   ["What do I need for the class?", "A phone, tablet or computer, internet, and Zoom or Google Meet. The teacher sends the class link before each lesson."],
 ];
 
+// Helpful next step for each answer — kept separate from the answer text so
+// the FAQPage JSON-LD above stays plain text.
+const FAQ_LINKS: Record<string, { href: string; label: string }> = {
+  "How much are the fees?": { href: "/fees", label: "See full fees & payment details" },
+  "How do I pay from abroad?": { href: "/fees", label: "See how to pay from abroad" },
+  "Is the class time fixed?": { href: "/timetable", label: "See flexible class timings" },
+  "Is there a free trial class?": { href: "/free-trial", label: "Book a free trial class" },
+  "Who teaches my child?": { href: "/teachers", label: "Meet our teachers" },
+  "How do I track my child's progress?": { href: "/student", label: "Open the student dashboard" },
+  "Do you teach adults too?": { href: "/courses", label: "See all courses for adults" },
+};
+
 export default function FaqPage() {
   const jsonLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQS.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) };
   return (
@@ -29,6 +42,9 @@ export default function FaqPage() {
             <details key={q} className="bg-white border border-emerald-200 rounded-xl p-4">
               <summary className="font-semibold cursor-pointer">{q}</summary>
               <p className="mt-2 text-sm">{a}</p>
+              {FAQ_LINKS[q] && (
+                <p className="mt-2 text-sm"><Link href={FAQ_LINKS[q].href} className="text-emerald-700 font-semibold underline">{FAQ_LINKS[q].label} →</Link></p>
+              )}
             </details>
           ))}
         </div>

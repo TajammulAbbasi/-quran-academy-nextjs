@@ -9,7 +9,7 @@ export default function TeachersList() {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {approved.map((t) => (
-        <article key={t.id} className="bg-white border border-emerald-200 rounded-2xl p-5">
+        <article key={t.id} className="lift bg-white border border-emerald-200 rounded-2xl p-5">
           <h3 className="font-bold text-lg text-emerald-900">{t.name} {t.demo ? "(Demo)" : ""}</h3>
           <p className="text-sm text-emerald-700">{t.gender} teacher · {t.qualification}</p>
           <p className="text-sm mt-2">{t.experience}</p>

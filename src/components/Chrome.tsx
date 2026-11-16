@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { SITE } from "@/config/site";
 import { LangToggle, useLang } from "@/lib/i18n";
+import Reveal from "@/components/Reveal";
 
 export function Header() {
   const { t } = useLang();
@@ -24,7 +25,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <LangToggle />
-          <a href={SITE.whatsappLink} target="_blank" rel="noreferrer" className="bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-full">WhatsApp {SITE.whatsappDisplay}</a>
+          <a href={SITE.whatsappLink} target="_blank" rel="noreferrer" className="btn-anim bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-full">WhatsApp {SITE.whatsappDisplay}</a>
         </div>
       </div>
       <div className="bg-emerald-800 text-white text-xs">
@@ -75,15 +76,17 @@ export function Footer() {
 export function Section({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-2xl md:text-3xl font-bold text-emerald-900">{title}</h2>
-      {sub && <p className="text-emerald-800 mt-2 max-w-3xl">{sub}</p>}
-      <div className="mt-6">{children}</div>
+      <Reveal>
+        <h2 className="text-2xl md:text-3xl font-bold text-emerald-900">{title}</h2>
+        {sub && <p className="text-emerald-800 mt-2 max-w-3xl">{sub}</p>}
+        <div className="mt-6">{children}</div>
+      </Reveal>
     </section>
   );
 }
 
 export function WhatsAppButton({ label }: { label?: string }) {
-  return <a href={SITE.whatsappLink} target="_blank" rel="noreferrer" className="inline-block bg-emerald-700 text-white font-semibold px-6 py-3 rounded-full">{label ?? `WhatsApp ${SITE.whatsappDisplay}`}</a>;
+  return <a href={SITE.whatsappLink} target="_blank" rel="noreferrer" className="btn-anim inline-block bg-emerald-700 text-white font-semibold px-6 py-3 rounded-full">{label ?? `WhatsApp ${SITE.whatsappDisplay}`}</a>;
 }
 
 /** Timezone converter: pick a country, see example class times in that timezone. */

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SITE } from "@/config/site";
 import { useLang } from "@/lib/i18n";
 import { Section, TimezonePicker, WhatsAppButton } from "@/components/Chrome";
+import TeachersList from "@/components/TeachersList";
 
 export default function HomeClient() {
   const { t } = useLang();
@@ -31,6 +32,14 @@ export default function HomeClient() {
               <Link href="/courses" className="text-emerald-700 font-semibold text-sm mt-3 inline-block">Learn more →</Link>
             </article>
           ))}
+        </div>
+      </Section>
+
+      <Section title={t("teachersTitle")} sub="Qualified male & female teachers — only owner-approved teachers are shown here.">
+        <TeachersList />
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link href="/teachers" className="text-emerald-700 font-semibold text-sm inline-block">See all teachers →</Link>
+          <Link href="/teacher" className="text-emerald-700 font-semibold text-sm inline-block">Teach With Us — Apply →</Link>
         </div>
       </Section>
 

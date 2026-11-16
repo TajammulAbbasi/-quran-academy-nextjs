@@ -23,6 +23,7 @@ const dict: Record<string, { en: string; ru: string }> = {
   freeTrial: { en: "Book a Free Trial Class", ru: "Muft Trial Class Book Karein" },
   whatsappUs: { en: "WhatsApp Us", ru: "WhatsApp Karein" },
   coursesTitle: { en: "Our Courses", ru: "Hamare Courses" },
+  teachersTitle: { en: "Meet Your Teachers", ru: "Apne Ustad Se Milain" },
   feesTitle: { en: "Fees — Simple Monthly Plans", ru: "Fees — Asan Monthly Plans" },
   flexibleTitle: { en: "Flexible Timing — You Choose Your Class Time", ru: "Flexible Timing — Aap Apna Class Time Khud Choose Karein" },
   flexibleBody: { en: "No class time is fixed or compulsory. Tell us when your child is free — usually after school — and we set the class at that time. Your teacher and the owner can change your class time anytime in the dashboard.", ru: "Koi time lazmi nahi hai. Bata dein bacha kab free hota hai — aam tor par school ke baad — aur hum usi time class laga dein ge. Aap ka ustad aur owner dashboard se time kabhi bhi badal sakte hain." },

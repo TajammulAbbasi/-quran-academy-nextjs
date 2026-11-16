@@ -8,8 +8,8 @@ export const SITE = {
   whatsappIntl: "+92 312 7675565",
   whatsappLink: "https://wa.me/923127675565",
   // NOTE: this is the only WhatsApp number on the site — do not change it without the owner.
-  email: "admissions@noorquranacademy.example",
-  baseUrl: "https://www.noorquranacademy.example",
+  // Live site URL — update this if a custom domain is added later.
+  baseUrl: "https://quran-academy-nextjs.vercel.app",
   // Owner must fill these in before taking real payments.
   // Students send money TO this bank account. The academy has NO
   // Wise / Payoneer / PayPal / Stripe account — the student sends from
